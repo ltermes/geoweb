@@ -28,15 +28,21 @@ function terremotosGeonamesToGeoJSON(respuestaGeonames){
 
     } //fin funcion
 
+
     function generarPeticionTerremotos() {
 
-        var peticion = 'http://secure.geonames.org/earthquakesJSON?' +
+        var mg = 5;
+        if (map.getZoom() > 8){
+            mg = 3;
+        } ;
+
+        var peticion = 'https://secure.geonames.org/earthquakesJSON?' +
             'north=' + map.getBounds()._ne.lat + '&' +
             'south=' + map.getBounds()._sw.lat + '&' +
             'east=' + map.getBounds()._ne.lng + '&' +
             'west=' + map.getBounds()._sw.lng + '&' +
-            'maxRows=50&' +
-            'minMagnitude=5&' +
+            'maxRows=200&' +
+            'minMagnitude='+mg+'&' +
             'username=masterupc&';
     
         enviarPeticion(peticion).then(function (respuestaGeonames) {

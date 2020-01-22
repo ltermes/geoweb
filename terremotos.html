@@ -1,18 +1,18 @@
 <html>
-    <head>
+
+<head>
     <meta charset='utf-8' />
     <title>Terremotos</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.6.1/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.6.1/mapbox-gl.css' rel='stylesheet' />
     <link href='css/mapabase.css' rel='stylesheet' />
-
     <script src='js/utils.js'></script>
     <script src='js/terremotos.js'></script>
     <script>
         var map;
         function init() {
- 
+
             mapboxgl.accessToken = "";
             map = new mapboxgl.Map({
                 container: 'map',
@@ -26,15 +26,32 @@
             map.addControl(new mapboxgl.AttributionControl({
                 compact: true
             }));
-            map.addControl(new mapboxgl.NavigationControl());           
- 
+            map.addControl(new mapboxgl.NavigationControl());
+            map.on("load", function () {
+
+                generarPeticionTerremotos();
+                addPopupToMap("terremotos");
+
+            }); // fin load mapa
+
+            map.on("zoomend", function () {
+
+                generarPeticionTerremotos();
+            });
+
+            map.on("moveend", function () {
+
+                generarPeticionTerremotos();
+            });
+
         } //fin init
- 
+
     </script>
-    </head>
- 
-    <body onload="init()">
-        <div id='map'></div>
-    </body>
- 
+</head>
+
+<body onload="init()">
+    <div class="titulo">Terremotos del mundo</div>
+    <div id='map'></div>
+</body>
+
 </html>
